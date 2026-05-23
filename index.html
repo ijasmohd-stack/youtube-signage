@@ -6,29 +6,66 @@
 
 <style>
 html, body {
-    margin:0;
-    padding:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:black;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    overflow: hidden;
 }
 
-iframe {
-    width:100vw;
-    height:100vh;
-    border:none;
+#player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 </style>
 </head>
 
 <body>
 
-<iframe
-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLxCR2VwvDTNnIe8MiI0Y6DTbSTgmjhxL_&autoplay=1&mute=1&loop=1&controls=0&rel=0&vq=hd1080"
-allow="autoplay; encrypted-media"
-allowfullscreen>
-</iframe>
+<div id="player"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+let player;
+
+function onYouTubeIframeAPIReady() {
+
+    player = new YT.Player('player', {
+
+        playerVars: {
+            listType: 'playlist',
+            list: 'PLxCR2VwvDTNnIe8MiI0Y6DTbSTgmjhxL_',
+            autoplay: 1,
+            controls: 0,
+            showinfo: 0,
+            modestbranding: 1,
+            loop: 1,
+            rel: 0,
+            mute: 1,
+            playsinline: 1
+        },
+
+        events: {
+            'onReady': onPlayerReady
+        }
+    });
+}
+
+function onPlayerReady(event) {
+
+    event.target.playVideo();
+
+    setTimeout(() => {
+        event.target.setPlaybackQuality('hd1080');
+    }, 2000);
+
+}
+</script>
 
 </body>
 </html>
