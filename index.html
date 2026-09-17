@@ -14,84 +14,24 @@ html, body {
     overflow: hidden;
 }
 
-#player {
+iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    border: 0;
 }
 </style>
 </head>
 
 <body>
 
-<div id="player"></div>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-
-<script>
-
-let player;
-
-const PLAYLIST_ID = 'PLxCR2VwvDTNnIe8MiI0Y6DTbSTgmjhxL_';
-
-function onYouTubeIframeAPIReady() {
-
-    player = new YT.Player('player', {
-
-        width: '100%',
-        height: '100%',
-
-        playerVars: {
-            autoplay: 1,
-            controls: 0,
-            mute: 1,
-            playsinline: 1,
-            rel: 0
-        },
-
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
-    });
-}
-
-
-function onPlayerReady(event) {
-
-    // Load the YouTube playlist
-    event.target.loadPlaylist({
-        list: PLAYLIST_ID,
-        listType: 'playlist',
-        index: 0,
-        startSeconds: 0
-    });
-
-    // Wait for playlist to load
-    setTimeout(function() {
-
-        event.target.setShuffle(true);
-        event.target.setLoop(true);
-        event.target.mute();
-        event.target.playVideo();
-
-    }, 1500);
-}
-
-
-function onPlayerStateChange(event) {
-
-    // Keep playlist playing
-    if (event.data === YT.PlayerState.CUED) {
-        player.setShuffle(true);
-        player.setLoop(true);
-        player.playVideo();
-    }
-}
-
-</script>
+<iframe
+    src="https://www.youtube.com/embed/U7kHR7x1Zm8?autoplay=1&mute=1&controls=0&loop=1&listType=playlist&list=PLxCR2VwvDTNnIe8MiI0Y6DTbSTgmjhxL_&playsinline=1"
+    allow="autoplay; encrypted-media; fullscreen"
+    allowfullscreen>
+</iframe>
 
 </body>
 </html>
