@@ -58,6 +58,7 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerReady(event) {
 
+     event.target.setShuffle(true);
     event.target.playVideo();
 
     setTimeout(() => {
