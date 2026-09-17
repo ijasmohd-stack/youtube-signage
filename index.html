@@ -31,41 +31,66 @@ html, body {
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
+
 let player;
+
+const PLAYLIST_ID = 'PLxCR2VwvDTNnIe8MiI0Y6DTbSTgmjhxL_';
 
 function onYouTubeIframeAPIReady() {
 
     player = new YT.Player('player', {
 
+        width: '100%',
+        height: '100%',
+
         playerVars: {
-            listType: 'playlist',
-            list: 'PLxCR2VwvDTNnIe8MiI0Y6DTbSTgmjhxL_',
             autoplay: 1,
             controls: 0,
-            showinfo: 0,
-            modestbranding: 1,
-            loop: 1,
-            rel: 0,
             mute: 1,
-            playsinline: 1
+            playsinline: 1,
+            rel: 0
         },
 
         events: {
-            'onReady': onPlayerReady
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
         }
     });
 }
 
+
 function onPlayerReady(event) {
 
-     event.target.setShuffle(true);
-    event.target.playVideo();
+    // Load the YouTube playlist
+    event.target.loadPlaylist({
+        list: PLAYLIST_ID,
+        listType: 'playlist',
+        index: 0,
+        startSeconds: 0
+    });
 
-    setTimeout(() => {
-        event.target.setPlaybackQuality('hd1080');
-    }, 2000);
+    // Wait for playlist to load
+    setTimeout(function() {
 
+        event.target.setShuffle(true);
+        event.target.setLoop(true);
+        event.target.mute();
+        event.target.playVideo();
+
+    }, 1500);
 }
+
+
+function onPlayerStateChange(event) {
+
+    // Keep playlist playing
+    if (event.data === YT.PlayerState.CUED) {
+        player.setShuffle(true);
+        player.setLoop(true);
+        player.playVideo();
+    }
+}
+
 </script>
 
 </body>
